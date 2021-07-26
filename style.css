@@ -1,3 +1,74 @@
+html {
+    height: 100%;
+}
+
 #container {
 
+}
+
+body {
+    height:100%;
+    background-attachment: fixed;
+    background: rgb(131,58,180);
+    background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#board {
+    position : absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows-rows: 100px 100px 100px;
+
+}
+
+.box {
+    width: 95px;
+    height:95px;
+    background-color: red;
+    padding-bottom : 5px;
+    background-clip: content-box;
+    border-radius: 15px;
+
+
+
+}
+
+.no-ownership {
+    background-color: lightgrey;
+}
+.no-ownership:hover {
+    background-color: grey;
+}
+
+.player {
+    background-color: lightcoral;
+    background-image: url("images/boy.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ia {
+    background-color: cornsilk;
+    background-image: url("images/bot.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.player:hover {
+    background: red;
+    background-image: url("images/close.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ia:hover {
+    background: red;
+    background-image: url("images/close.svg");
+    background-repeat: no-repeat;
+    background-position: center;
 }
