@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://css.gg/css?=|bot|boy" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Loop&family=Zen+Tokyo+Zoo&display=swap" rel="stylesheet">
+
 
 </head>
 <body>
+<h1>Tic Tac Toe</h1>
 <div id="container">
-  <h1>Tic Tac Toe</h1>
+    <div id="player-score">
+        <img src="images/boy.svg" alt="">
+        <p>Player score : </p>
+        <div class="score" id="p-score-counter">0</div>
+    </div>
     <div id="board">
         <div class="box no-ownership"></div>
         <div class="box no-ownership"></div>
@@ -20,8 +28,13 @@
         <div class="box no-ownership"></div>
         <div class="box no-ownership"></div>
         <div class="box no-ownership"></div>
-
     </div>
+    <div id="ia-score">
+        <img src="images/bot.svg" alt="">
+        <p>CPU score : </p>
+        <div class="score" id="ia-score-counter">0</div>
+    </div>
+
 </div>
 
 <script src="script.js"></script>

@@ -3,7 +3,26 @@ html {
 }
 
 #container {
+    width:100%;
+    margin-top:20%;
+display: inline-flex;
+    justify-content: space-around;
+}
 
+#container p{
+    font-family: 'Zen Loop', cursive;
+    font-size: 2em;
+    color:white;
+}
+
+h1{
+    font-family: 'Zen Tokyo Zoo', cursive;
+    color : white;
+    font-size: 4em;
+    position : absolute;
+    left:50%;
+
+    transform: translate(-50%);
 }
 
 body {
@@ -16,10 +35,10 @@ body {
 }
 
 #board {
-    position : absolute;
+    /*position : absolute;
     left:50%;
     top:50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows-rows: 100px 100px 100px;
@@ -46,6 +65,8 @@ body {
 }
 
 .player {
+    -webkit-animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     background-color: lightcoral;
     background-image: url("images/boy.svg");
     background-repeat: no-repeat;
@@ -53,22 +74,54 @@ body {
 }
 
 .ia {
+    -webkit-animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     background-color: cornsilk;
     background-image: url("images/bot.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.player:hover {
+.score {
+    font-size: 4em;
+    color:white;
+    font-family: 'Zen Tokyo Zoo', cursive;
+
+}
+
+
+
+.invalid {
     background: red;
     background-image: url("images/close.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.ia:hover {
-    background: red;
-    background-image: url("images/close.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+
+
+.rotate-90-cw {
+
+}
+
+
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+}
+@keyframes rotate{
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
 }
