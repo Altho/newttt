@@ -6,6 +6,7 @@ const playerClick = new Audio('audio/playerclick.wav')
 const iaClick = new Audio('audio/iaclick.wav')
 const playerWinSound = new Audio('audio/success.wav')
 const iaWinSound = new Audio('audio/gameover.wav')
+const shuffle = new Audio ('audio/shuffle.wav')
 let winningLine;
 let pScore = 0;
 let iaScore = 0;
@@ -32,6 +33,7 @@ let board = ["", "", "",
 ];
 
 function newGame() {
+    replay.style.display="none";
     for (let i = 0; i < boxes.length; i++) {
         const objectBox = {
             position: i + 1,
@@ -131,10 +133,19 @@ function showLine(winner) {
         console.log(pScore);
         console.log(pScoreDisplay);
         document.querySelector('#p-score-counter').innerText = pScore;
+        for(let box of boxes){
+            box.removeEventListener("click",mainGame);
+        }
+        replay.style.display="block";
         playerWinSound.play();
     } else {
         iaScore++;
         document.querySelector('#ia-score-counter').innerText = iaScore;
+        for(let box of boxes){
+            box.removeEventListener("click",mainGame);
+        }
+        replay.style.display="block";
+
         iaWinSound.play();
 
 
@@ -142,7 +153,7 @@ function showLine(winner) {
 }
 
 function resetBoard(){
-
+    shuffle.play();
     winningLine=0;
     playerTurn=true;
     board = ["", "", "",
