@@ -2,11 +2,16 @@ const boxes = document.querySelectorAll('.box');
 console.log(boxes);
 console.log('working');
 let currentMove;
+let playedMoves=0;
 const playerClick = new Audio('audio/playerclick.wav')
 const iaClick = new Audio('audio/iaclick.wav')
 const playerWinSound = new Audio('audio/success.wav')
 const iaWinSound = new Audio('audio/gameover.wav')
 const shuffle = new Audio ('audio/shuffle.wav')
+let indexesPossible = [0,1,2,3,4,5,6,7,8];
+let filteredBoardIndexes;
+let iaGrid=[];
+
 let winningLine;
 let pScore = 0;
 let iaScore = 0;
@@ -49,8 +54,7 @@ function newGame() {
 
 function mainGame() {
     {
-        console.log(this);
-        console.log(this.dataObject);
+
         currentMove = this.dataObject;
         if (this.dataObject.ownership === 'none') {
             if (playerTurn == true) {
@@ -60,21 +64,23 @@ function mainGame() {
                 this.dataObject.ownership = 'player';
                 console.log(this.dataObject);
                 board[this.dataObject.position - 1] = 1
+                playedMoves++;
                 playerClick.play();
 
                 playerTurn = false;
-                scoreCheck()
+                const check = scoreCheck()
+                if(check !=1 && check != -1){
+
+
+                setTimeout(function() {
+                    iaPlay();
+                }, 500);
+                };
+
             } else {
 
-                this.classList.remove("no-ownership");
-                this.classList.add("ia");
-                this.dataObject.ownership = 'ia';
-                console.log(this.dataObject);
-                board[this.dataObject.position - 1] = 2
-                iaClick.play();
 
-                playerTurn = true;
-                scoreCheck()
+
             }
 
 
@@ -97,23 +103,29 @@ function scoreCheck() {
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
                 showLine('player');
+                replay.addEventListener("click", function(){
+                    resetBoard();
+                })
+                return 1;
 
 
 
-            } else {
+            } else  {
                 console.log('ia win');
                 console.log(line);
                 winningLine = line;
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
                 showLine('ia');
+                replay.addEventListener("click", function(){
+                    resetBoard();
+                })
+                return -1;
 
             }
             ;
 
-            replay.addEventListener("click", function(){
-                resetBoard();
-            })
+
             //return true;
         }
     }
@@ -138,6 +150,7 @@ function showLine(winner) {
         }
         replay.style.display="block";
         playerWinSound.play();
+
     } else {
         iaScore++;
         document.querySelector('#ia-score-counter').innerText = iaScore;
@@ -149,13 +162,62 @@ function showLine(winner) {
         iaWinSound.play();
 
 
+
+    }
+
+}
+
+function iaPlay(){
+
+filter();
+
+    for(let i=0;i<filteredBoardIndexes.length;i++) {
+        const index = indexesPossible.indexOf(filteredBoardIndexes[i]);
+        if (index > -1) {
+            indexesPossible.splice(index, 1);
+
+        }
+    }
+const iaMoveSet = Math.floor(Math.random()*indexesPossible.length);
+    const iaMove = indexesPossible[iaMoveSet];
+    console.log(iaMoveSet);
+    console.log(iaMove);
+    console.log(indexesPossible);
+    currentMove=boxes[iaMove].dataObject
+    boxes[iaMove].classList.remove("no-ownership");
+    boxes[iaMove].classList.add("ia");
+    boxes[iaMove].dataObject.ownership = 'ia';
+    board[boxes[iaMove].dataObject.position - 1] = 2
+    playedMoves++;
+    iaClick.play();
+
+    scoreCheck()
+    playerTurn = true;
+
+}
+
+
+function filter(){
+    for(let box of board){
+        filteredBoardIndexes = [...board
+            .entries()]
+            .filter(([_, boxValue]) => boxValue !== "")
+            .map(([boxIndex]) => boxIndex);
+
     }
 }
+
+
+
+
+
+
 
 function resetBoard(){
     shuffle.play();
     winningLine=0;
     playerTurn=true;
+    indexesPossible = [0,1,2,3,4,5,6,7,8];
     board = ["", "", "",
         "", "", "",
         "", "", ""
