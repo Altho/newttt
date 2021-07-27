@@ -3,23 +3,41 @@ html {
 }
 
 #container {
+    width:100%;
+    margin-top:20%;
+display: inline-flex;
+    justify-content: space-around;
+}
 
+#container p{
+    font-family: 'Zen Loop', cursive;
+    font-size: 2em;
+    color:white;
+}
+
+h1{
+    font-family: 'Zen Tokyo Zoo', cursive;
+    color : white;
+    font-size: 4em;
+    position : absolute;
+    left:50%;
+
+    transform: translate(-50%);
 }
 
 body {
     height:100%;
+
+    background-color: #330000;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
-    background: rgb(131,58,180);
-    background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
+    background-size: cover;}
 
 #board {
-    position : absolute;
+    /*position : absolute;
     left:50%;
     top:50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows-rows: 100px 100px 100px;
@@ -40,12 +58,36 @@ body {
 
 .no-ownership {
     background-color: lightgrey;
+    -webkit-animation: antirotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940)reverse both;
+    animation: antirotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940)reverse both;
+
 }
 .no-ownership:hover {
     background-color: grey;
+
+}
+
+#replay{
+    position: absolute;
+    left:50%;
+    transform: translate(-50%);
+    margin-top: 20px;
+    padding: 5px;
+    font-family: 'Zen Tokyo Zoo', cursive;
+    color: white;
+    font-size: 2em;
+    border: 2px white double;
+    display: none;
+}
+
+#replay:hover{
+    -webkit-box-shadow: 5px 5px 15px 5px #fff;
+    box-shadow: 5px 5px 15px 5px #fff;
 }
 
 .player {
+    -webkit-animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     background-color: lightcoral;
     background-image: url("images/boy.svg");
     background-repeat: no-repeat;
@@ -53,22 +95,161 @@ body {
 }
 
 .ia {
+    -webkit-animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: rotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     background-color: cornsilk;
     background-image: url("images/bot.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.player:hover {
-    background: red;
-    background-image: url("images/close.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+.score {
+    font-size: 4em;
+    color:white;
+    font-family: 'Zen Tokyo Zoo', cursive;
+
 }
 
-.ia:hover {
+.frosted {
+    background: rgba( 255, 255, 255, 0.20 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 11.0px );
+    -webkit-backdrop-filter: blur( 11.0px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    padding : 10px;
+}
+
+.frosted img {
+    margin-left: 15%;
+    margin-right: 15%;
+    transform: rotate(90deg);
+}
+
+.player-bg {
+    background: rgba(240,128,128,0.2);
+
+
+}
+
+.ia-bg {
+    background: rgba( 255, 248, 220,0.2);
+
+
+}
+
+
+
+.ia-line {
     background: red;
     background-image: url("images/close.svg");
     background-repeat: no-repeat;
     background-position: center;
+    -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+    animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+.player-line {
+    background : lightgreen;
+    background-image: url("images/check.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+    animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+
+
+
+
+@-webkit-keyframes heartbeat {
+    from {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    10% {
+        -webkit-transform: scale(0.91);
+        transform: scale(0.91);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    17% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    33% {
+        -webkit-transform: scale(0.87);
+        transform: scale(0.87);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    45% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+}
+@keyframes heartbeat {
+    from {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    10% {
+        -webkit-transform: scale(0.91);
+        transform: scale(0.91);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    17% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+    33% {
+        -webkit-transform: scale(0.87);
+        transform: scale(0.87);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    45% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+}
+
+
+
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+}
+@keyframes antirotate{
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
 }
