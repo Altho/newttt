@@ -13,8 +13,8 @@
 <body>
 <h1>Tic Tac Toe</h1>
 <div id="container">
-    <div id="player-score">
-        <img src="images/boy.svg" alt="">
+    <div id="player-score" class="frosted  player-bg" >
+        <div><img src="images/boy.svg" alt=""></div>
         <p>Player score : </p>
         <div class="score" id="p-score-counter">0</div>
     </div>
@@ -29,14 +29,15 @@
         <div class="box no-ownership"></div>
         <div class="box no-ownership"></div>
     </div>
-    <div id="ia-score">
-        <img src="images/bot.svg" alt="">
+    <div id="ia-score" class="frosted ia-bg">
+        <div><img src="images/bot.svg" alt=""></div>
         <p>CPU score : </p>
         <div class="score" id="ia-score-counter">0</div>
     </div>
 
-</div>
 
+</div>
+<div id="replay">NEW GAME</div>
 <script src="script.js"></script>
 </body>
 </html>
