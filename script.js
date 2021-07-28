@@ -253,6 +253,8 @@ function resetBoard(){
     playerFw.classList.remove('pyro');
     winningLine=0;
     playedMoves=0;
+    filteredBoardIndexes=[];
+    currentMove="";
     gameOver=false;
     playerTurn=true;
     indexesPossible = [0,1,2,3,4,5,6,7,8];
