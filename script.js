@@ -1,23 +1,27 @@
 const boxes = document.querySelectorAll('.box');
+const soundSwitch = document.querySelector('#soundToggle')
+const playerFw = document.querySelector('#player-score');
+const iaFw = document.querySelector('#ia-score');
+
 console.log(boxes);
 console.log('working');
 let currentMove;
 let playedMoves=0;
-const playerClick = new Audio('audio/playerclick.wav')
-const iaClick = new Audio('audio/iaclick.wav')
-const playerWinSound = new Audio('audio/success.wav')
-const iaWinSound = new Audio('audio/gameover.wav')
-const shuffle = new Audio ('audio/shuffle.wav')
+const playerClick = new Audio('audio/playerclick.wav');
+const iaClick = new Audio('audio/iaclick.wav');
+const playerWinSound = new Audio('audio/success.wav');
+const iaWinSound = new Audio('audio/gameover.wav');
+const shuffle = new Audio ('audio/shuffle.wav');
+
 let indexesPossible = [0,1,2,3,4,5,6,7,8];
 let filteredBoardIndexes;
-let iaGrid=[];
+let soundToggle = true;
 
 let winningLine;
 let pScore = 0;
 let iaScore = 0;
 const replay = document.querySelector('#replay');
 let pScoreDisplay = document.querySelector('#p-score-counter').innerText;
-let iaScoreDisplay = document.querySelector('#ia-score-counter').innerText;
 
 let winLines = [
     [[1, 2], [4, 8], [3, 6]],
@@ -36,6 +40,11 @@ let board = ["", "", "",
     "", "", "",
     "", "", ""
 ];
+
+soundSwitch.addEventListener('click',()=>{
+    soundToggle =! soundToggle;
+    soundSwitch.classList.toggle('toggled-off');
+})
 
 function newGame() {
     replay.style.display="none";
@@ -65,7 +74,7 @@ function mainGame() {
                 console.log(this.dataObject);
                 board[this.dataObject.position - 1] = 1
                 playedMoves++;
-                playerClick.play();
+                soundMixer.playerSfx();
 
                 playerTurn = false;
                 const check = scoreCheck()
@@ -111,8 +120,6 @@ function scoreCheck() {
 
 
             } else  {
-                console.log('ia win');
-                console.log(line);
                 winningLine = line;
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
@@ -126,7 +133,6 @@ function scoreCheck() {
             ;
 
 
-            //return true;
         }
     }
     return false;
@@ -134,32 +140,34 @@ function scoreCheck() {
 }
 
 function showLine(winner) {
+
     for (let i = 0; i < 3; i++) {
-        console.log(boxes[winningLine[i]])
 
         boxes[winningLine[i]].classList.add(`${winner}-line`);
 
     }
     if (winner === 'player') {
+        playerFw.classList.add('pyro');
         pScore++;
-        console.log(pScore);
-        console.log(pScoreDisplay);
         document.querySelector('#p-score-counter').innerText = pScore;
         for(let box of boxes){
             box.removeEventListener("click",mainGame);
         }
         replay.style.display="block";
-        playerWinSound.play();
+
+        soundMixer.victorySfx();
 
     } else {
+        iaFw.classList.add('pyro');
         iaScore++;
         document.querySelector('#ia-score-counter').innerText = iaScore;
         for(let box of boxes){
             box.removeEventListener("click",mainGame);
         }
         replay.style.display="block";
+        iaFw.classList.add('pyro');
 
-        iaWinSound.play();
+        soundMixer.gameOverSfx();
 
 
 
@@ -180,16 +188,13 @@ filter();
     }
 const iaMoveSet = Math.floor(Math.random()*indexesPossible.length);
     const iaMove = indexesPossible[iaMoveSet];
-    console.log(iaMoveSet);
-    console.log(iaMove);
-    console.log(indexesPossible);
     currentMove=boxes[iaMove].dataObject
     boxes[iaMove].classList.remove("no-ownership");
     boxes[iaMove].classList.add("ia");
     boxes[iaMove].dataObject.ownership = 'ia';
     board[boxes[iaMove].dataObject.position - 1] = 2
     playedMoves++;
-    iaClick.play();
+    soundMixer.iaSfx();
 
     scoreCheck()
     playerTurn = true;
@@ -214,7 +219,9 @@ function filter(){
 
 
 function resetBoard(){
-    shuffle.play();
+    soundMixer.shuffleSfx();
+    iaFw.classList.remove('pyro');
+    playerFw.classList.remove('pyro');
     winningLine=0;
     playerTurn=true;
     indexesPossible = [0,1,2,3,4,5,6,7,8];
@@ -234,3 +241,15 @@ function resetBoard(){
     newGame();
 }
 newGame();
+
+const soundMixer = (() => {
+
+
+    const playerSfx=() => {if(soundToggle===true){playerClick.play();}};
+    const iaSfx=() =>{if(soundToggle===true){iaClick.play();}};
+    const victorySfx=() =>{if(soundToggle===true){playerWinSound.play();}};
+        const gameOverSfx=() =>{if(soundToggle===true){iaWinSound.play();}};
+        const shuffleSfx=() =>{if(soundToggle===true){shuffle.play();}};
+        return {playerSfx,victorySfx,iaSfx,gameOverSfx,shuffleSfx};
+
+})();

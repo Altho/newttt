@@ -12,11 +12,14 @@
 </head>
 <body>
 <h1>Tic Tac Toe</h1>
+<div id="soundToggle" ></div>
 <div id="container">
     <div id="player-score" class="frosted  player-bg" >
+        <div class="before"></div>
+        <div class="after"></div>
         <div><img src="images/boy.svg" alt=""></div>
         <p>Player score : </p>
-        <div class="score" id="p-score-counter">0</div>
+        <div class="score"  id="p-score-counter">0</div>
     </div>
     <div id="board">
         <div class="box no-ownership"></div>
@@ -30,6 +33,8 @@
         <div class="box no-ownership"></div>
     </div>
     <div id="ia-score" class="frosted ia-bg">
+        <div class="before"></div>
+        <div class="after"></div>
         <div><img src="images/bot.svg" alt=""></div>
         <p>CPU score : </p>
         <div class="score" id="ia-score-counter">0</div>
