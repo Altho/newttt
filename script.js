@@ -2,9 +2,11 @@ const boxes = document.querySelectorAll('.box');
 const soundSwitch = document.querySelector('#soundToggle')
 const playerFw = document.querySelector('#player-score');
 const iaFw = document.querySelector('#ia-score');
+let playerTotalMove=0;
+let iaTotalMove=0;
+let announce=document.querySelector('#announce');
 
 console.log(boxes);
-console.log('working');
 let currentMove;
 let playedMoves=0;
 const playerClick = new Audio('audio/playerclick.wav');
@@ -12,6 +14,7 @@ const iaClick = new Audio('audio/iaclick.wav');
 const playerWinSound = new Audio('audio/success.wav');
 const iaWinSound = new Audio('audio/gameover.wav');
 const shuffle = new Audio ('audio/shuffle.wav');
+let gameOver = false;
 
 let indexesPossible = [0,1,2,3,4,5,6,7,8];
 let filteredBoardIndexes;
@@ -67,7 +70,7 @@ function mainGame() {
         currentMove = this.dataObject;
         if (this.dataObject.ownership === 'none') {
             if (playerTurn == true) {
-
+                playerTotalMove++;
                 this.classList.remove("no-ownership");
                 this.classList.add("player");
                 this.dataObject.ownership = 'player';
@@ -101,6 +104,7 @@ function mainGame() {
 
 function scoreCheck() {
 
+
     let player = board[currentMove.position - 1];
     for (let i = 0; i < winLines[currentMove.position - 1].length; i++) {
         let line = winLines[currentMove.position - 1][i];
@@ -112,30 +116,38 @@ function scoreCheck() {
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
                 showLine('player');
-                replay.addEventListener("click", function(){
+                replay.addEventListener("click", function () {
                     resetBoard();
                 })
                 return 1;
 
 
-
-            } else  {
+            } else {
                 winningLine = line;
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
                 showLine('ia');
-                replay.addEventListener("click", function(){
+                replay.addEventListener("click", function () {
                     resetBoard();
                 })
                 return -1;
 
             }
+
+
             ;
 
 
         }
+        else if(drawCheck()===1){
+
+            break;
+        };
     }
     return false;
+
+
+
 
 }
 
@@ -147,6 +159,9 @@ function showLine(winner) {
 
     }
     if (winner === 'player') {
+        announce.innerText="YOU WIN !";
+        announce.classList.add('win');
+        announce.style.display="flex";
         playerFw.classList.add('pyro');
         pScore++;
         document.querySelector('#p-score-counter').innerText = pScore;
@@ -158,6 +173,9 @@ function showLine(winner) {
         soundMixer.victorySfx();
 
     } else {
+        announce.innerText="YOU LOSE !";
+        announce.classList.add('lose');
+        announce.style.display="flex";
         iaFw.classList.add('pyro');
         iaScore++;
         document.querySelector('#ia-score-counter').innerText = iaScore;
@@ -176,9 +194,9 @@ function showLine(winner) {
 }
 
 function iaPlay(){
-
-filter();
-
+if(playerTotalMove<5){
+    filter();
+    iaTotalMove= iaTotalMove+2;
     for(let i=0;i<filteredBoardIndexes.length;i++) {
         const index = indexesPossible.indexOf(filteredBoardIndexes[i]);
         if (index > -1) {
@@ -186,7 +204,7 @@ filter();
 
         }
     }
-const iaMoveSet = Math.floor(Math.random()*indexesPossible.length);
+    const iaMoveSet = Math.floor(Math.random()*indexesPossible.length);
     const iaMove = indexesPossible[iaMoveSet];
     currentMove=boxes[iaMove].dataObject
     boxes[iaMove].classList.remove("no-ownership");
@@ -198,6 +216,8 @@ const iaMoveSet = Math.floor(Math.random()*indexesPossible.length);
 
     scoreCheck()
     playerTurn = true;
+
+}
 
 }
 
@@ -219,10 +239,21 @@ function filter(){
 
 
 function resetBoard(){
+    announce.innerText="";
+    announce.classList.remove('draw');
+    announce.classList.remove('win');
+    announce.classList.remove('lose');
+
+
+    announce.style.display="none";
+    playerTotalMove=0;
+    iaTotalMove=0;
     soundMixer.shuffleSfx();
     iaFw.classList.remove('pyro');
     playerFw.classList.remove('pyro');
     winningLine=0;
+    playedMoves=0;
+    gameOver=false;
     playerTurn=true;
     indexesPossible = [0,1,2,3,4,5,6,7,8];
     board = ["", "", "",
@@ -253,3 +284,25 @@ const soundMixer = (() => {
         return {playerSfx,victorySfx,iaSfx,gameOverSfx,shuffleSfx};
 
 })();
+
+function drawCheck(){
+
+   if(playerTotalMove>=5 && iaTotalMove>=8){
+
+            announce.innerText="DRAW !";
+            announce.classList.add('draw');
+            announce.style.display="flex";
+            replay.style.display="block";
+            replay.addEventListener("click", function () {
+                resetBoard();
+            })
+            return 1;
+
+
+
+
+
+
+   }
+
+}
