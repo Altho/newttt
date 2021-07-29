@@ -106,12 +106,16 @@ function scoreCheck() {
 
 
     let player = board[currentMove.position - 1];
+    console.log(`player:${player}`)
     for (let i = 0; i < winLines[currentMove.position - 1].length; i++) {
+        console.log(`winLines[currentMove.position - 1].length:${winLines[currentMove.position - 1].length}`)
         let line = winLines[currentMove.position - 1][i];
+        console.log(`line:${line}`);
         if (player === board[line[0]] && player === board[line[1]]) {
+            console.log(board[line[0]]);
             if (board[line[0]] == 1) {
                 console.log('player win');
-                console.log(line);
+
                 winningLine = line;
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
@@ -122,7 +126,7 @@ function scoreCheck() {
                 return 1;
 
 
-            } else {
+            } else if(board[line[0]] == 2) {
                 winningLine = line;
                 winningLine.push(currentMove.position - 1);
                 console.log(winningLine);
@@ -139,9 +143,8 @@ function scoreCheck() {
 
 
         }
-        else if(drawCheck()===1){
-
-            break;
+        else {
+            drawCheck()
         };
     }
     return false;
@@ -213,9 +216,9 @@ if(playerTotalMove<5){
     board[boxes[iaMove].dataObject.position - 1] = 2
     playedMoves++;
     soundMixer.iaSfx();
-
-    scoreCheck()
     playerTurn = true;
+    scoreCheck()
+
 
 }
 
