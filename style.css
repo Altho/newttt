@@ -54,7 +54,7 @@ display: inline-flex;
     justify-content: space-evenly;
 }
 
-@media only screen and (max-width: 780px) {
+@media (max-width: 780px) {
 #container{
     margin-top: 0;
     display: block;
