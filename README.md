@@ -11,4 +11,6 @@ HTML, Vanilla JS, CSS
 This is a single player TicTacToe. It has a basic IA (better IA is planned)
 it checks for completed lines and accounts for draws. It also keep tracks of the score
 
+07/29 :
 
+Better mobile experience
