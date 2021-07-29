@@ -18,7 +18,7 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
@@ -80,11 +80,8 @@ body {
     background-size: cover;}
 
 #board {
-    /*position : absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%, -50%);*/
-    
+
+
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows-rows: 100px 100px 100px;
@@ -109,6 +106,8 @@ body {
     animation: antirotate 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940)reverse both;
 
 }
+
+
 .no-ownership:hover {
     background-color: grey;
 
@@ -140,8 +139,6 @@ body {
     top:20px;
 
 }
-
-
 
 .toggled-off:before{
 
