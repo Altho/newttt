@@ -5,6 +5,7 @@ const playerFw = document.querySelector('#player-score');
 const iaFw = document.querySelector('#ia-score');
 let announce = document.querySelector('#announce');
 const replay = document.querySelector('#replay');
+const text = document.querySelector("#text")
 let pScoreDisplay = document.querySelector('#p-score-counter').innerText;
 ///Audio///
 const playerClick = new Audio('audio/playerclick.wav');
@@ -174,7 +175,7 @@ function showLine(winner) {
 
     }
     if (winner === 'player') {
-        announce.innerText = "YOU WIN !";
+        text.innerText = "YOU WIN !";
         announce.classList.add('win');
         announce.style.display = "flex";
         playerFw.classList.add('pyro');
@@ -188,7 +189,7 @@ function showLine(winner) {
         soundMixer.victorySfx();
 
     } else {
-        announce.innerText = "YOU LOSE !";
+        text.innerText = "YOU LOSE !";
         announce.classList.add('lose');
         announce.style.display = "flex";
         iaFw.classList.add('pyro');
@@ -248,7 +249,7 @@ function filter() {
 
 //Removes classes and resets variables
 function resetBoard() {
-    announce.innerText = "";
+    text.innerText = "";
     announce.classList.remove('draw');
     announce.classList.remove('win');
     announce.classList.remove('lose');
@@ -321,7 +322,7 @@ function drawCheck() {
 
     if (playerTotalMove >= 5 && iaTotalMove >= 8) {
 
-        announce.innerText = "DRAW !";
+        text.innerText = "DRAW !";
         announce.classList.add('draw');
         announce.style.display = "flex";
         replay.style.display = "block";
